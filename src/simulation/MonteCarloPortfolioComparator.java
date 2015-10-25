@@ -8,6 +8,12 @@ import java.util.concurrent.*;
 
 import simulation.config.Parameters;
 
+/**
+ * This class runs Monte-Carlo simulations on a collection of portfolios and generates 
+ * the comparable results of projected values.
+ * 
+ * @author Akshay More
+ */
 public class MonteCarloPortfolioComparator {
 
 	private List<Portfolio> portfoliosToCompare;
@@ -88,7 +94,8 @@ public class MonteCarloPortfolioComparator {
 		
 	}
 	
-	private void processResults(Future<ISimulationResults> future, Portfolio portfolio) throws InterruptedException, ExecutionException {
+	private void processResults(Future<ISimulationResults> future, Portfolio portfolio) 
+			throws InterruptedException, ExecutionException {
 		ISimulationResults simulationResults = future.get();
 		if (simulationResults == null) {
 			System.out.println("A problem was encountered running the simulation for portfolio <" 
@@ -120,25 +127,3 @@ public class MonteCarloPortfolioComparator {
 	}
 
 }
-
-
-//SimulationRunner simulationRunner = new SimulationRunner(
-//conservativePortfolio, iterationParameters, runnerParameters);
-//ISimulationResults simulationResults = simulationRunner.runSimulation();
-//if (simulationResults.hasExceptions()) {
-//System.out
-//	.println("Simulation did not complete successfully. The following <"
-//			+ simulationResults.getExceptions().size()
-//			+ "> exceptions occurred ...");
-//for (Throwable t : simulationResults.getExceptions())
-//System.out.println(t.getMessage());
-//} else {
-//System.out.println("Portfolio Type = "
-//	+ conservativePortfolio.getPortfolioType().name());
-//System.out.println("Median 20th Year value = "
-//	+ simulationResults.getPercentile(50));
-//System.out.println("10% Best Case value = "
-//	+ simulationResults.getPercentile(90));
-//System.out.println("10% Worst Case value = "
-//	+ simulationResults.getPercentile(10));
-//}

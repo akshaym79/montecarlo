@@ -13,6 +13,12 @@ import java.util.concurrent.TimeUnit;
 
 import simulation.exception.SimulationException;
 
+/**
+ * This class facilitates the running of a Monte-Carlo simulation given a portfolio
+ * and the relevant simulation parameters.
+ * 
+ * @author Akshay More
+ */
 public class SimulationRunner implements Callable<ISimulationResults> {
 
 	private final Portfolio portfolio;
@@ -28,6 +34,10 @@ public class SimulationRunner implements Callable<ISimulationResults> {
 		this.runnerParameters = runnerParameters;
 	}
 	
+	/**
+	 * Calculates the entire set of projected values for portfolio.
+	 * Each iteration is run as a separate thread.
+	 */
 	@Override
 	public ISimulationResults call() throws Exception {
 		

@@ -3,6 +3,14 @@ package simulation;
 import java.util.Arrays;
 import java.util.Collection;
 
+/**
+ * An instance of this class represent the results of a simulation.
+ * If the simulation failed for some reason, the hasExceptions flag will return true
+ * and the exceptions will be available as a Collection.
+ * If the simulation was successful, the data can be queried for any valid percentile values.
+ * 
+ * @author Akshay More
+ */
 public class SimulationResults implements ISimulationResults {
 
 	private double[] rawData;

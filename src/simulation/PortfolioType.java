@@ -1,6 +1,12 @@
 package simulation;
 
+/**
+ * Enumeration of different types of portfolios.
+ * 
+ * @author Akshay More
+ */
 public enum PortfolioType {
+	
 	CONSERVATIVE("Conservative", "Low risk, low return"),
 	AGGRESSIVE("Aggressive", "High risk, high return");
 	

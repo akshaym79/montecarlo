@@ -1,6 +1,18 @@
 package simulation;
 
-public class SimulationRunnerParameters {
+/**
+ * An instance of this class contains the parameters required to run a Monte-Carlo simulation.
+ * These paramters are:
+ * 1. Number of iterations to perform.
+ * 2. Number of threads in the pool for executing iterations.
+ * 3. Number of threads in the pool for performing simulations (of different portfolios).
+ * 4. Timeout (in milliseconds) to wait for the result of an iteration.
+ * The last three parameters are operational parameters and do not affect the results or accuracy 
+ * of the simulation. They should be used to optimize the performance of the application.
+ * 
+ * @author Akshay More
+ */
+public final class SimulationRunnerParameters {
 
 	private final int numberOfIterations;
 	private final int numberOfIterationThreads;

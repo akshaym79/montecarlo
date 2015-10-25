@@ -1,6 +1,11 @@
 package simulation;
 
-public class Portfolio {
+/**
+ * An instance of this class is used to encapsulate the risk/return characteristics of a portfolio.
+ *
+ * @author Akshay More
+ */
+public final class Portfolio {
 
 	private PortfolioType portfolioType;
 	private double risk;
