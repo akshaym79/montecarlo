@@ -1,8 +1,10 @@
 package simulation;
 
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.*;
 
@@ -74,12 +76,14 @@ public class MonteCarloPortfolioComparator {
 			portfolioForSimulationTask.put(future, portfolio);
 		}
 		
+		printHeaders();
+		
 		for (int i=0; i<portfoliosToCompare.size(); i++) {
 			Portfolio portfolioForFuture = null;
 			try {
 				Future<ISimulationResults> future = completionService.take();
 				portfolioForFuture = portfolioForSimulationTask.get(future); 
-				processResults(future, portfolioForFuture);
+				printResults(future, portfolioForFuture);
 			} catch (InterruptedException | ExecutionException e) {
 				if (portfolioForFuture == null) {
 					System.out.println("An exception was encountered running the simulation.\n" + e.getMessage());
@@ -94,7 +98,19 @@ public class MonteCarloPortfolioComparator {
 		
 	}
 	
-	private void processResults(Future<ISimulationResults> future, Portfolio portfolio) 
+	private void printHeaders() {
+		System.out.println();
+		StringBuilder sb = new StringBuilder();
+		Formatter formatter = new Formatter(sb, Locale.US);
+		formatter.format("%15s", "Portfolio Type");
+		formatter.format("%25s", "Median 20th Year ($)");
+		formatter.format("%25s", "10% Best Case ($)");
+		formatter.format("%25s", "10% Worst Case ($)");
+		System.out.println(sb.toString());
+		formatter.close();
+	}
+
+	private void printResults(Future<ISimulationResults> future, Portfolio portfolio) 
 			throws InterruptedException, ExecutionException {
 		ISimulationResults simulationResults = future.get();
 		if (simulationResults == null) {
@@ -110,14 +126,14 @@ public class MonteCarloPortfolioComparator {
 			for (Throwable t : simulationResults.getExceptions())
 				System.out.println(t.getMessage());
 		} else {
-			System.out.println("Portfolio Type = "
-					+ portfolio.getPortfolioType().name());
-			System.out.println("Median 20th Year value = "
-					+ simulationResults.getPercentile(50));
-			System.out.println("10% Best Case value = "
-					+ simulationResults.getPercentile(90));
-			System.out.println("10% Worst Case value = "
-					+ simulationResults.getPercentile(10));
+			StringBuilder sb = new StringBuilder();
+			Formatter formatter = new Formatter(sb, Locale.US);
+			formatter.format("%15s", portfolio.getPortfolioType().type());
+			formatter.format("%,25.2f", simulationResults.getPercentile(50));
+			formatter.format("%,25.2f", simulationResults.getPercentile(90));
+			formatter.format("%,25.2f", simulationResults.getPercentile(10));
+			System.out.println(sb.toString());
+			formatter.close();
 		}
 	}
 
