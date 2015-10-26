@@ -58,6 +58,23 @@ public class SimulationResultsTest {
 		Double result = simulationResults.getPercentile(50);
 		assertTrue("Querying for any percentile on results containing an exception should return NaN. The actual result is " + result, 
 				result.equals(Double.NaN));
+	}
+	
+	@Test
+	public void testNullResults() {
+		// Verify that null results return a NaN for any percentile query.
+		ISimulationResults simulationResults = new SimulationResults(null, false, null);
+		Double result = simulationResults.getPercentile(50);
+		assertTrue("Querying for any percentile on null results should return NaN. The actual result is " + result, 
+				result.equals(Double.NaN));
+	}
 
+	@Test
+	public void testEmptyResults() {
+		// Verify that empty results return a NaN for any percentile query.
+		ISimulationResults simulationResults = new SimulationResults(new double[]{}, false, null);
+		Double result = simulationResults.getPercentile(50);
+		assertTrue("Querying for any percentile on empty results should return NaN. The actual result is " + result, 
+				result.equals(Double.NaN));
 	}
 }
