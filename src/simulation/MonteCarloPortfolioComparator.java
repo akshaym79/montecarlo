@@ -33,16 +33,14 @@ public class MonteCarloPortfolioComparator {
 				Parameters.NUM_OF_ITERATIONS, 
 				Parameters.NUM_OF_ITERATION_THREADS,
 				Parameters.NUM_OF_SIMULATION_THREADS,
-				Parameters.FETCH_ITERATION_RESULT_TIMEOUT_MS
-				);
+				Parameters.FETCH_ITERATION_RESULT_TIMEOUT_MS);
 	}
 
 	private void initializeIterationParameters() {
 		this.iterationParameters = new SimulationIterationParameters(
 				Parameters.PORTFOLIO_INITIAL_VALUE, 
 				Parameters.INFLATION_RATE,
-				Parameters.YEARS_PER_ITERATION
-				);
+				Parameters.YEARS_PER_ITERATION);
 	}
 
 	private void initializePortfolios() {
@@ -50,13 +48,11 @@ public class MonteCarloPortfolioComparator {
 		Portfolio conservativePortfolio = new Portfolio(
 				PortfolioType.CONSERVATIVE, 
 				Parameters.CONSERVATIVE_RETURNS,
-				Parameters.CONSERVATIVE_RISK
-				);
+				Parameters.CONSERVATIVE_RISK);
 		Portfolio aggressivePortfolio = new Portfolio(
 				PortfolioType.AGGRESSIVE,
 				Parameters.AGGRESSIVE_RETURNS, 
-				Parameters.AGGRESSIVE_RISK
-				);
+				Parameters.AGGRESSIVE_RISK);
 		portfoliosToCompare.add(conservativePortfolio);
 		portfoliosToCompare.add(aggressivePortfolio);
 	}
@@ -72,8 +68,7 @@ public class MonteCarloPortfolioComparator {
 			Callable<ISimulationResults> simulationRunner = new SimulationRunner(
 					portfolio, 
 					iterationParameters, 
-					runnerParameters
-					);
+					runnerParameters);
 			Future<ISimulationResults> future = completionService.submit(simulationRunner);
 			portfolioForSimulationTask.put(future, portfolio);
 		}
@@ -91,8 +86,7 @@ public class MonteCarloPortfolioComparator {
 					System.out.println("An exception was encountered running the simulation.\n" + e.getMessage());
 				} else {
 					System.out.println("An exception was encountered running the simulation for portfolio <" 
-							+ portfolioForFuture.getPortfolioType().name() + ">.\n" + e.getMessage()
-							);
+							+ portfolioForFuture.getPortfolioType().name() + ">.\n" + e.getMessage());
 				}
 			}
 		}
@@ -117,8 +111,7 @@ public class MonteCarloPortfolioComparator {
 		ISimulationResults simulationResults = future.get();
 		if (simulationResults == null) {
 			System.out.println("A problem was encountered running the simulation for portfolio <" 
-					+ portfolio.getPortfolioType().name() + ">."
-					);
+					+ portfolio.getPortfolioType().name() + ">.");
 			return;
 		}
 		if (simulationResults.hasExceptions()) {

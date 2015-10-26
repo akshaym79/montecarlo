@@ -7,9 +7,9 @@ package simulation;
  */
 public final class Portfolio {
 
-	private PortfolioType portfolioType;
-	private double risk;
-	private double returns;
+	private final PortfolioType portfolioType;
+	private final double risk;
+	private final double returns;
 	
 	public Portfolio(PortfolioType portfolioType, double returns, double risk) {
 		this.portfolioType = portfolioType;

@@ -49,20 +49,21 @@ public class SimulationRunner implements Callable<ISimulationResults> {
 		for (int i=0; i<runnerParameters.getNumberOfIterations(); i++) {
 			Callable<Double> iteration = new SimulationIteration(portfolio, iterationParameters);
 			completionService.submit(iteration);
-//			System.out.println("Submitted iteration <" + i + ">");
 		}
 		
 		for (int i=0; i<runnerParameters.getNumberOfIterations(); i++) {
 			try {
 				Future<Double> nextIterationResult = completionService.poll(
 						runnerParameters.getFetchIterationResultTimeout(), 
-						TimeUnit.MILLISECONDS
-						);
+						TimeUnit.MILLISECONDS);
 				if (nextIterationResult != null)
 					projectedPortfolioValues[i] = nextIterationResult.get();
 				else {
 					projectedPortfolioValues[i] = Double.NaN;
-					exceptions.add(new SimulationException("Timed out waiting for result of iteration."));
+					exceptions.add(
+							new SimulationException("Timed out waiting for result of iteration. "
+									+ "Please try increasing the value of config parameter "
+									+ "FETCH_ITERATION_RESULT_TIMEOUT_MS"));
 				}
 			} catch (InterruptedException e) {
 				projectedPortfolioValues[i] = Double.NaN;
@@ -71,7 +72,6 @@ public class SimulationRunner implements Callable<ISimulationResults> {
 				projectedPortfolioValues[i] = Double.NaN;
 				exceptions.add(new SimulationException("Failed to get result of iteration.", e));
 			}
-//			System.out.println("Done with iteration <" + i + ">");
 		}
 		
 		execService.shutdown();

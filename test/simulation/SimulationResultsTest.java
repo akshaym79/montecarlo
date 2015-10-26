@@ -4,6 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+/**
+ * Unit tests for SimluationResults
+ * 
+ * @author Akshay More
+ */
 public class SimulationResultsTest {
 
 	@Test

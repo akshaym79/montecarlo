@@ -32,11 +32,11 @@ public class SimulationIteration implements Callable<Double> {
 		double portfolioValue = iterationParameters.getInitialValue();
 		Random random = new Random();
 
-		for (int i=0; i<iterationParameters.getNumberOfYears(); i++) {
+		for (int i = 0; i < iterationParameters.getNumberOfYears(); i++) {
 			double nominalReturn = 
 					portfolio.getReturns() + portfolio.getRisk() * random.nextGaussian();
 			double inflationAdjustedPercentageReturn = 
-					(1 + nominalReturn/100)/(1 + iterationParameters.getRateOfInflation()/100) - 1;
+					(1.0 + nominalReturn/100.0) / (1.0 + iterationParameters.getRateOfInflation()/100.0) - 1.0;
 			portfolioValue += (portfolioValue * inflationAdjustedPercentageReturn);
 		}
 		
