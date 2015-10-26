@@ -62,8 +62,10 @@ public class MonteCarloPortfolioComparator {
 	}
 
 	public void generateComparison() {
-		ExecutorService execService = Executors.newFixedThreadPool(Parameters.NUM_OF_SIMULATION_THREADS);
-		CompletionService<ISimulationResults> completionService = new ExecutorCompletionService<ISimulationResults>(execService);
+		ExecutorService execService = 
+				Executors.newFixedThreadPool(Parameters.NUM_OF_SIMULATION_THREADS);
+		CompletionService<ISimulationResults> completionService = 
+				new ExecutorCompletionService<ISimulationResults>(execService);
 		Map<Future<ISimulationResults>, Portfolio> portfolioForSimulationTask = new HashMap<>(); 
 
 		for (Portfolio portfolio: portfoliosToCompare) {

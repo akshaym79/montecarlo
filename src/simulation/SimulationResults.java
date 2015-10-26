@@ -19,15 +19,22 @@ public class SimulationResults implements ISimulationResults {
 	
 	public SimulationResults(double[] rawData, boolean hasExceptions, Collection<Throwable> exceptions) {
 		this.rawData = rawData;
-		Arrays.sort(this.rawData);
+		this.hasExceptions = hasExceptions;
+		this.exceptions = exceptions;
+		if (this.rawData != null && this.rawData.length > 0)
+			Arrays.sort(this.rawData);
 	}
 	
 	@Override
 	public double getPercentile(int nth) {
 		if (hasExceptions) return Double.NaN;
 		if (nth < 0 || nth > 100) return Double.NaN;
-		if (rawData.length < (100/nth)) return Double.NaN;
+		
+		if (rawData == null || rawData.length == 0) return Double.NaN;
+		if (nth == 0) return rawData[0];
+		
 		int rank = (int)Math.ceil((nth/100.0) * rawData.length);
+		
 		return rawData[rank-1];
 	}
 
